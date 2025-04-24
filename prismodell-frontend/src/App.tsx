@@ -5,6 +5,7 @@ function App() {
   const [prisModel, setPrisModel] = useState('');
   const [priceArea, setPriceArea] = useState('');
   const [consumption, setConsumtipn] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const prisModelOptions = [
     { value: 'Norgespris', label: 'Norges pris' },
     { value: 'Strømstøtte', label: 'Strømstøtte' },
@@ -29,8 +30,8 @@ function App() {
     setConsumtipn(value);
   };
 
-  const handlePriceCalculation = async () => {
-
+  const handlePriceCalculation = () => {
+    setTotalPrice(100);
   };
 
   return (
@@ -62,10 +63,10 @@ function App() {
             </option>
           ))}
         </select></Grid.Col>
-        <Grid.Col> <button onSubmit={handlePriceCalculation} style={{ height: 50, width: 250, marginTop: 50, backgroundColor: 'green' }}
+        <Grid.Col> <button onClick={handlePriceCalculation} style={{ height: 50, width: 250, marginTop: 50, backgroundColor: 'green' }}
         >Calculate price</button></Grid.Col>
         <Grid.Col>
-          <Text ta="left">Total price : </Text>
+          <Text ta="left">Total price : {totalPrice} </Text>
         </Grid.Col>
       </Grid>
     </Container >
