@@ -16,12 +16,9 @@ A simple FastAPI project that helps users find the **best electricity price mode
 
 ## 📈 Sample Data
 
-The data compares three electricity models:
+The data compares two electricity models for a user profile:
 - `strømstøtte`
 - `norgespris`
-For each model, it includes prices for:
-- `Profil A`
-- `Profil B`
 
 Across years:
 - `2023`
@@ -32,6 +29,7 @@ Example snippet:
 Modell,Timestamp,Profil A,Profil B
 strømstøtte,2023-01-01,4251.38,6955.29
 norgespris,2023-01-01,2603.85,4001.15
+....
 ```
 
 # How to run
