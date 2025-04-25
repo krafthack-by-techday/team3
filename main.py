@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Query, HTTPException
-from typing import List, Dict
 import pandas as pd
 
 app = FastAPI()
@@ -18,10 +17,18 @@ from io import StringIO
 df = pd.read_csv(StringIO(data))
 df['Year'] = pd.to_datetime(df['Timestamp']).dt.year
 
+# Mapping shorthand to full column name
+profil_map = {
+    "A": "Profil A",
+    "B": "Profil B"
+}
+
 @app.get("/best_model")
-def best_model(year: int = Query(...), profil: str = Query(...)):
-    if profil not in ["Profil A", "Profil B"]:
-        raise HTTPException(status_code=400, detail="Invalid profil. Use 'Profil A' or 'Profil B'.")
+def best_model(year: int = Query(...), profil: str = Query(..., description="Use 'A' or 'B'")):
+    if profil not in profil_map:
+        raise HTTPException(status_code=400, detail="Invalid profil. Use 'A' or 'B'.")
+
+    column_name = profil_map[profil]
 
     year_data = df[df['Year'] == year]
 
@@ -29,7 +36,7 @@ def best_model(year: int = Query(...), profil: str = Query(...)):
         raise HTTPException(status_code=404, detail="No data for the given year.")
 
     # Get the cost for each model
-    costs = year_data[['Modell', profil]].set_index('Modell')[profil]
+    costs = year_data[['Modell', column_name]].set_index('Modell')[column_name]
 
     # Find the best model (lowest cost)
     best_modell = costs.idxmin()
