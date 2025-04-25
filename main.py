@@ -1,49 +1,52 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, Query, HTTPException
+from typing import List, Dict
 import pandas as pd
-from typing import Optional
-from io import StringIO
+
 app = FastAPI()
 
-# Fake data for electricity prices for the whole year
-data = StringIO("""
-Dato,Time,Profil A,Profil B,NorgesPris,Sromstotte,SpotPris
-2023,01,0.22,0.966,1.959,1.994,2.169
-2024,01,0.22,0.966,1.959,1.994,2.169
-""")
+# Mock CSV data
+data = """
+Modell,Timestamp,Profil A,Profil B
+strømstøtte,2023-01-01,4251.38,6955.29
+strømstøtte,2024-01-01,4557.83,6905.09
+norgespris,2023-01-01,2603.85,4001.15
+norgespris,2024-01-01,3341.89,4988.67
+spotpris,2023-01-01,4003.85,4500.15
+spotpris,2024-01-01,5000.89,4988.67
+"""
 
 # Load the data into a DataFrame
-df = pd.read_csv(data, delimiter=',')
+from io import StringIO
+df = pd.read_csv(StringIO(data))
+df['Year'] = pd.to_datetime(df['Timestamp']).dt.year
 
-def calculate_profitability(df, profile, year):
-    if profile not in ['A', 'B']:
-        raise HTTPException(status_code=400, detail="Invalid profile")
+@app.get("/best_model")
+def best_model(year: int = Query(...), profil: str = Query(...)):
+    if profil not in ["Profil A", "Profil B"]:
+        raise HTTPException(status_code=400, detail="Invalid profil. Use 'Profil A' or 'Profil B'.")
 
-    profile_col = f'Profil {profile}'
-    filtered_data = df[df['Dato'] == year]
+    year_data = df[df['Year'] == year]
 
-    if filtered_data.empty:
-        raise HTTPException(status_code=404, detail="No data found for the specified year")
+    if year_data.empty:
+        raise HTTPException(status_code=404, detail="No data for the given year.")
 
-    norgespris_sum = (filtered_data[profile_col] * filtered_data['NorgesPris']).sum()
-    sromstotte_sum = (filtered_data[profile_col] * filtered_data['Sromstotte']).sum()
-    spotpris_sum = (filtered_data[profile_col] * filtered_data['SpotPris']).sum()
+    # Get the cost for each model
+    costs = year_data[['Modell', profil]].set_index('Modell')[profil]
 
-    costs = {
-        "NorgesPris": norgespris_sum,
-        "Sromstotte": sromstotte_sum,
-        "SpotPris": spotpris_sum
+    # Find the best model (lowest cost)
+    best_modell = costs.idxmin()
+    best_price = costs.min()
+
+    # Calculate percentage savings vs other models
+    savings = {
+        modell: round(((cost - best_price) / cost) * 100, 2)
+        for modell, cost in costs.items() if modell != best_modell
     }
-
-    most_cost_effective = min(costs, key=costs.get)
 
     return {
-        "costs": costs,
-        "MostCostEffective": most_cost_effective
+        "year": year,
+        "profil": profil,
+        "best_modell": best_modell,
+        "best_price": best_price,
+        "percent_savings_vs_others": savings
     }
-
-@app.get("/profitability/")
-def profitability(
-        profile: str = Query(..., description="Profile A or B"),
-        year: int = Query(..., description="Year (e.g., 2023)")
-):
-    return calculate_profitability(df, profile, year)
