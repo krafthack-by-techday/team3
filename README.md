@@ -35,7 +35,7 @@ Modell,Timestamp,Profil A,Profil B
 strømstøtte,2023-01-01,4251.38,6955.29
 norgespris,2023-01-01,2603.85,4001.15
 spotpris,2023-01-01,4003.85,4001.15
-
+```
 
 # How to run
 
