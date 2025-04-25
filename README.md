@@ -19,7 +19,6 @@ A simple FastAPI project that helps users find the **best electricity price mode
 The data compares three electricity models:
 - `strømstøtte`
 - `norgespris`
-- 
 For each model, it includes prices for:
 - `Profil A`
 - `Profil B`
