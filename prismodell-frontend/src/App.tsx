@@ -1,75 +1,109 @@
-import React, { useState } from 'react';
-import { Box, Container, Grid, Text } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
+import { AppBar, Avatar, Box, Button, Container, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
+import { GaugeComponent } from 'react-gauge-component';
+import { ApiResponse } from './api/type';
+import axios from 'axios';
 
 function App() {
   const [prisModel, setPrisModel] = useState('');
   const [priceArea, setPriceArea] = useState('');
   const [consumption, setConsumtipn] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const prisModelOptions = [
-    { value: 'Norgespris', label: 'Norges pris' },
-    { value: 'Strømstøtte', label: 'Strømstøtte' },
-    { value: 'Spotpris', label: 'Spotpris' },
-  ];
-  const priceAreaOptions = [
-    { value: 'N01', label: 'N01 - Østlandet' },
-    { value: 'N02', label: 'N02 - Sørlandet' },
-    { value: 'N03', label: 'N03 - Midt Norge' },
-    { value: 'N04', label: 'N04 - Nord Norge' },
-    { value: 'N05', label: 'N05 - Vestlandet' },
-  ]
 
-  const onChangePriceAreaChange = (value: string) => {
-    setPriceArea(value);
+  const [selectYear, setSelectYear] = useState('2023');
+
+  const data: ApiResponse = {
+    year: 2023,
+    profil: "Profil B",
+    best_modell: "norgespris",
+    best_price: 4001.15,
+    percent_savings_vs_others: {
+      strømstøtte: 42.47,
+    }
   };
 
-  const onChangePriceModelChange = (value: string) => {
-    setPrisModel(value);
-  };
-  const onChangeConsumption = (value: number) => {
-    setConsumtipn(value);
-  };
+  const [bestPriceModel, setBestPriceModel] = useState<ApiResponse>(data);
 
-  const handlePriceCalculation = () => {
-    setTotalPrice(100);
-  };
+  const [profile, setProfile] = useState('B');
 
+  const handleProfileChange = (value: string) => {
+
+    setProfile(value);
+
+  }
+
+  const getData = async (url: string) => {
+    await axios.get(url, {
+      params: {
+        year: selectYear,
+        profil: profile
+
+      }
+    }).then(response => {
+      console.log('response', response);
+      setBestPriceModel(response.data);
+    })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
+
+  useEffect(() => { getData('http://127.0.0.1:8000/best_model') }, [profile, selectYear]);
+  console.log('bestPriceModel', bestPriceModel);
   return (
-    <Container fluid h={50} display='flex' style={{ marginTop: 50 }}>
-      <Grid display='flex' justify='flex-start'>
-        <Grid.Col>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+          </IconButton>
+          <Tooltip title="change profile"><Button onClick={() => handleProfileChange(profile == 'A' ? 'B' : 'A')}>
+            <Avatar>{profile}</Avatar>
+          </Button></Tooltip>
 
-          <input
-            style={{ height: 42, width: 250, marginRight: 50 }}
-            onChange={(event => onChangeConsumption(Number(event.target.value)))}
-            placeholder="Electricity consumption (KWH) per hour"
-          />
-        </Grid.Col>
-        <Grid.Col>
-          <select value={priceArea} onChange={(event) => onChangePriceAreaChange(event.target.value)} style={{ height: 50, width: 250, marginTop: 50 }}>
-            <option value="">Select price area</option>
-            {priceAreaOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </Grid.Col>
-        <Grid.Col><select value={prisModel} onChange={(event) => onChangePriceModelChange(event.target.value)} style={{ height: 50, width: 250, marginTop: 50 }}>
-          <option value="">Select price model</option>
-          {prisModelOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select></Grid.Col>
-        <Grid.Col> <button onClick={handlePriceCalculation} style={{ height: 50, width: 250, marginTop: 50, backgroundColor: 'green' }}
-        >Calculate price</button></Grid.Col>
-        <Grid.Col>
-          <Text ta="left">Total price : {totalPrice} </Text>
-        </Grid.Col>
-      </Grid>
-    </Container >
+        </Toolbar>
+      </AppBar>
+      <Container maxWidth='sm'>
+        <Box display='flex' justifyContent='center' fontStyle='normal' marginTop={10} gap={5}>
+          <Button variant={selectYear == '2023' ? "contained" : "outlined"} onClick={() => setSelectYear('2023')}>2023</Button>
+          <Button variant={selectYear == '2024' ? "contained" : "outlined"} onClick={() => setSelectYear('2024')}>2024</Button>
+        </Box>
+        <Box display='flex' justifyContent='center' fontStyle='normal' marginTop={10}>
+          <Typography>The best model is {data.best_modell}. </Typography>
+        </Box>
+        <GaugeComponent
+          value={bestPriceModel?.percent_savings_vs_others.strømstøtte}
+          type="radial"
+          labels={{
+            tickLabels: {
+              type: "inner",
+              ticks: [
+                { value: 20 },
+                { value: 40 },
+                { value: 60 },
+                { value: 80 },
+                { value: 100 }
+              ]
+            }
+          }}
+          arc={{
+            colorArray: ['#5BE12C', '#EA4228'],
+            subArcs: [{ limit: 10 }, { limit: 30 }, {}, {}, {}],
+            padding: 0.02,
+            width: 0.3
+          }}
+          pointer={{
+            elastic: true,
+            animationDelay: 0
+          }}
+        />
+      </Container>
+    </Box>
   );
 }
 
