@@ -1,13 +1,23 @@
-# 🔌 Power Price Optimizer API
+# Concept: «velg-strøm.no: Norgespris eller strømstøtte?»
 
-A simple FastAPI project that helps users find the **best electricity price model** for their profile in a given year, based on historical data.
+* Consumer-oriented decision-making tool for selecting the best electricity subscription using Monte Carlo simulation
+* Provides a recommendation based on historical data, forecasts, and user preferences. Forecasts include future power prices. Optional input from the consumer includes past power consumption.
+* Focus on recipient-centric dialogue and the simplest possible interface, as opposed to discussing & visualizing underlying data, which would be sender-centric.
 
 ## User experience prototype
 
 * [UX prototype](https://www.figma.com/proto/7sjBbyxgUdYYqbURStYQUW/Hackathon?page-id=0%3A1&node-id=3-706&viewport=-208%2C149%2C1&t=B9rOxowOZW8cD0QX-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=3%3A706) — Figma dummy
 * [Video of prototype](https://github.com/krafthack-by-techday/team3/blob/main/team-3-figma-dummy-trim-480p.mov) — 24mb .mov file for download
 
-## 🚀 Features
+---
+
+# Technical details
+
+## 🔌 Power Price Optimizer API
+
+A simple FastAPI project that helps users find the **best electricity price model** for their profile in a given year, based on historical data.
+
+### 🚀 Features
 
 - ✅ One simple endpoint
 - 📅 Supports year 2023 and 2024
@@ -17,7 +27,7 @@ A simple FastAPI project that helps users find the **best electricity price mode
 
 ---
 
-## 📈 Sample Data
+### 📈 Sample Data
 
 The data compares two electricity models for a user profile:
 - `strømstøtte`
@@ -35,9 +45,9 @@ norgespris,2023-01-01,2603.85,4001.15
 ....
 ```
 
-# How to run
+## How to run
 
-## 🚀 Install & Setup
+### 🚀 Install & Setup
 
 ```bash
 # Install pyenv
@@ -59,7 +69,7 @@ pip install fastapi uvicorn
 # Save requirements (optional)
 pip freeze > requirements.txt
 ```
-## ▶️ Run Server
+### ▶️ Run Server
 
 ```bash
 uvicorn main:app --reload
