@@ -11,6 +11,20 @@
 * [Video of prototype](https://github.com/krafthack-by-techday/team3/blob/main/team-3-figma-dummy-trim-480p.mov) — 24mb .mov file for download
 * [Figma source](https://www.figma.com/design/7sjBbyxgUdYYqbURStYQUW/Hackathon-2025?node-id=82-6212&t=W6iKQOO3H7E135o9-4) — only available to Statkraft employees
 
+## Background for the hackathon
+
+* Statnett hosted a similar hackathon in 2024 that was regarded as a success. Statkraft has also recently had a hackathon, but internal.
+* This year’s topic: Credibility crisis in the power industry (“Tillitskrise i kraftbransjen”)
+* Agenda: See page 76 in the PDF on SharePoint: [Agenda](https://statnett.sharepoint.com/sites/KraftHackbytechday_fag/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FKraftHackbytechday%5Ffag%2FShared%20Documents%2FFellesinformasjon%2FOnboardingsm%C3%B8te%2010%2E4%2FInfo%2D%20og%20onboarding%2010%2E04%2E25%2Epdf&parent=%2Fsites%2FKraftHackbytechday%5Ffag%2FShared%20Documents%2FFellesinformasjon%2FOnboardingsm%C3%B8te%2010%2E4)
+
+### Background articles
+
+On the Norwegian population’s trust in the domestic power industry
+
+* [Kraftbransjen har lav tillit](https://www.nrk.no/okonomi/kraftbransjen-har-lav-tillit-1.553773) — nrk.no
+* [Innlegg: Kraftbransjens tillitsproblem](https://www.dn.no/innlegg/energi/det-gronne-skiftet/kraftkabler/innlegg-kraftbransjens-tillitsproblem/2-1-1085697) — dn.no
+* [Fornybarbransjen sliter med omdømmet](https://www.kime.no/aktuelt/fornybarbransjen-sliter-med-omdommet---blir-vanskeligere-a-gjennomfore-utbygginger-og-investeringer) — kime.no
+
 ---
 
 # Technical details
