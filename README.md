@@ -6,8 +6,10 @@
 
 ## User experience prototype
 
-* [UX prototype](https://www.figma.com/proto/7sjBbyxgUdYYqbURStYQUW/Hackathon?page-id=0%3A1&node-id=3-706&viewport=-208%2C149%2C1&t=B9rOxowOZW8cD0QX-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=3%3A706) — Figma dummy
+* [Desktop friendly demo of mobile app](https://www.figma.com/proto/7sjBbyxgUdYYqbURStYQUW/Hackathon-2025?page-id=0%3A1&node-id=82-6212&viewport=-208%2C149%2C1&t=FuZW9atQ3DwRvP9u-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=82%3A6212) (Figma)
+* [Mobile demo](https://bit.ly/Krafthack-2025-gruppe-3) (works in a browser, but install Figma on your mobile phone for the best experience) 
 * [Video of prototype](https://github.com/krafthack-by-techday/team3/blob/main/team-3-figma-dummy-trim-480p.mov) — 24mb .mov file for download
+* [Figma source](https://www.figma.com/design/7sjBbyxgUdYYqbURStYQUW/Hackathon-2025?node-id=82-6212&t=W6iKQOO3H7E135o9-4) — only available to Statkraft employees
 
 ---
 
