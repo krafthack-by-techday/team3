@@ -1,6 +1,6 @@
 # Concept: «velg-strøm.no: Norgespris eller strømstøtte?»
 
-* Consumer-oriented decision-making tool for selecting the best electricity subscription using Monte Carlo simulation
+* Consumer-oriented decision-making tool for selecting the best electricity subscription using [Monte Carlo simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method)
 * Provides a recommendation based on historical data, forecasts, and user preferences. Forecasts include future power prices. Optional input from the consumer includes past power consumption.
 * Focus on recipient-centric dialogue and the simplest possible interface, as opposed to discussing & visualizing underlying data, which would be sender-centric.
 
