@@ -92,3 +92,7 @@ pip freeze > requirements.txt
 ```bash
 uvicorn main:app --reload
 ```
+
+---
+
+Group 3 “Grid Rangers” in Statnett's 2025 hackathon
